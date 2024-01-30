@@ -1,11 +1,8 @@
-import { Operator } from '../Operator';
 import { Observable } from '../Observable';
-import { Subscriber } from '../Subscriber';
-import { OuterSubscriber } from '../OuterSubscriber';
-import { InnerSubscriber } from '../InnerSubscriber';
-import { subscribeToResult } from '../util/subscribeToResult';
-
-import { MonoTypeOperatorFunction, TeardownLogic } from '../types';
+import { MonoTypeOperatorFunction } from '../types';
+import { operate } from '../util/lift';
+import { noop } from '../util/noop';
+import { OperatorSubscriber } from './OperatorSubscriber';
 
 /**
  * Emits the most recently emitted value from the source Observable whenever
@@ -16,7 +13,7 @@ import { MonoTypeOperatorFunction, TeardownLogic } from '../types';
  *
  * ![](sample.png)
  *
- * Whenever the `notifier` Observable emits a value or completes, `sample`
+ * Whenever the `notifier` Observable emits a value, `sample`
  * looks at the source Observable and emits whichever value it has most recently
  * emitted since the previous sampling, unless the source has not emitted
  * anything since the previous sampling. The `notifier` is subscribed to as soon
@@ -39,58 +36,30 @@ import { MonoTypeOperatorFunction, TeardownLogic } from '../types';
  * @see {@link sampleTime}
  * @see {@link throttle}
  *
- * @param {Observable<any>} notifier The Observable to use for sampling the
+ * @param notifier The Observable to use for sampling the
  * source Observable.
- * @return {Observable<T>} An Observable that emits the results of sampling the
- * values emitted by the source Observable whenever the notifier Observable
- * emits value or completes.
- * @method sample
- * @owner Observable
+ * @return A function that returns an Observable that emits the results of
+ * sampling the values emitted by the source Observable whenever the notifier
+ * Observable emits value or completes.
  */
 export function sample<T>(notifier: Observable<any>): MonoTypeOperatorFunction<T> {
-  return (source: Observable<T>) => source.lift(new SampleOperator(notifier));
-}
-
-class SampleOperator<T> implements Operator<T, T> {
-  constructor(private notifier: Observable<any>) {
-  }
-
-  call(subscriber: Subscriber<T>, source: any): TeardownLogic {
-    const sampleSubscriber = new SampleSubscriber(subscriber);
-    const subscription = source.subscribe(sampleSubscriber);
-    subscription.add(subscribeToResult(sampleSubscriber, this.notifier));
-    return subscription;
-  }
-}
-
-/**
- * We need this JSDoc comment for affecting ESDoc.
- * @ignore
- * @extends {Ignored}
- */
-class SampleSubscriber<T, R> extends OuterSubscriber<T, R> {
-  private value: T;
-  private hasValue: boolean = false;
-
-  protected _next(value: T) {
-    this.value = value;
-    this.hasValue = true;
-  }
-
-  notifyNext(outerValue: T, innerValue: R,
-             outerIndex: number, innerIndex: number,
-             innerSub: InnerSubscriber<T, R>): void {
-    this.emitValue();
-  }
-
-  notifyComplete(): void {
-    this.emitValue();
-  }
-
-  emitValue() {
-    if (this.hasValue) {
-      this.hasValue = false;
-      this.destination.next(this.value);
-    }
-  }
+  return operate((source, subscriber) => {
+    let hasValue = false;
+    let lastValue: T | null = null;
+    source.subscribe(
+      new OperatorSubscriber(subscriber, (value) => {
+        hasValue = true;
+        lastValue = value;
+      })
+    );
+    const emit = () => {
+      if (hasValue) {
+        hasValue = false;
+        const value = lastValue!;
+        lastValue = null;
+        subscriber.next(value);
+      }
+    };
+    notifier.subscribe(new OperatorSubscriber(subscriber, emit, noop));
+  });
 }

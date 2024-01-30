@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "J5ex9XCHpWRRcJ9zOGZ8bGSxQ/wOABihNbsQKvwSCwTsGuZnxIYVcmBSu71feD3SZ84qUoqQJg3rQB2e83fRoQ==",
+  "dgSpecHash": "azxJ3x56mzFRvelw2ZOFIQxlWTk/3tvsXfPItrmnmZMYoi1E4c7Cvph/hKaKTf+vqWfVevxMamQhuvySwHf/Nw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\tavok\\OneDrive\\Documentos\\Codigo\\DotNet\\ExemploChatSignalR\\ExemploChatSignalR\\ExemploChatSignalR.csproj",
+  "projectFilePath": "C:\\Users\\tavok\\OneDrive\\Documentos\\Codigo\\DotNet\\SignalRExample\\ProjetoNetCoreApi\\ExemploChatSignalR\\ExemploChatSignalR.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tavok\\.nuget\\packages\\microsoft.aspnetcore.connections.abstractions\\8.0.1\\microsoft.aspnetcore.connections.abstractions.8.0.1.nupkg.sha512",
     "C:\\Users\\tavok\\.nuget\\packages\\microsoft.aspnetcore.signalr.common\\8.0.1\\microsoft.aspnetcore.signalr.common.8.0.1.nupkg.sha512",

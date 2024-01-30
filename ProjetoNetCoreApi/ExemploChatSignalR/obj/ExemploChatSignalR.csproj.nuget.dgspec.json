@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\tavok\\OneDrive\\Documentos\\Codigo\\DotNet\\ExemploChatSignalR\\ExemploChatSignalR\\ExemploChatSignalR.csproj": {}
+    "C:\\Users\\tavok\\OneDrive\\Documentos\\Codigo\\DotNet\\SignalRExample\\ProjetoNetCoreApi\\ExemploChatSignalR\\ExemploChatSignalR.csproj": {}
   },
   "projects": {
-    "C:\\Users\\tavok\\OneDrive\\Documentos\\Codigo\\DotNet\\ExemploChatSignalR\\ExemploChatSignalR\\ExemploChatSignalR.csproj": {
+    "C:\\Users\\tavok\\OneDrive\\Documentos\\Codigo\\DotNet\\SignalRExample\\ProjetoNetCoreApi\\ExemploChatSignalR\\ExemploChatSignalR.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\tavok\\OneDrive\\Documentos\\Codigo\\DotNet\\ExemploChatSignalR\\ExemploChatSignalR\\ExemploChatSignalR.csproj",
+        "projectUniqueName": "C:\\Users\\tavok\\OneDrive\\Documentos\\Codigo\\DotNet\\SignalRExample\\ProjetoNetCoreApi\\ExemploChatSignalR\\ExemploChatSignalR.csproj",
         "projectName": "ExemploChatSignalR",
-        "projectPath": "C:\\Users\\tavok\\OneDrive\\Documentos\\Codigo\\DotNet\\ExemploChatSignalR\\ExemploChatSignalR\\ExemploChatSignalR.csproj",
+        "projectPath": "C:\\Users\\tavok\\OneDrive\\Documentos\\Codigo\\DotNet\\SignalRExample\\ProjetoNetCoreApi\\ExemploChatSignalR\\ExemploChatSignalR.csproj",
         "packagesPath": "C:\\Users\\tavok\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\tavok\\OneDrive\\Documentos\\Codigo\\DotNet\\ExemploChatSignalR\\ExemploChatSignalR\\obj\\",
+        "outputPath": "C:\\Users\\tavok\\OneDrive\\Documentos\\Codigo\\DotNet\\SignalRExample\\ProjetoNetCoreApi\\ExemploChatSignalR\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

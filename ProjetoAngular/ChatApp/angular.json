@@ -16,7 +16,7 @@
             "outputPath": "dist/ChatApp",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
@@ -39,7 +39,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -62,18 +61,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ChatApp:build"
+            "buildTarget": "ChatApp:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ChatApp:build:production"
+              "buildTarget": "ChatApp:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ChatApp:build"
+            "buildTarget": "ChatApp:build"
           }
         },
         "test": {
@@ -119,6 +118,5 @@
           }
         }
       }
-    }},
-  "defaultProject": "ChatApp"
+    }}
 }

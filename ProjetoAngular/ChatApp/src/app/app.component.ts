@@ -7,6 +7,7 @@ import * as signalR from '@microsoft/signalr';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  title = 'Meu Aplicativo Angular';
   private hubConnection: signalR.HubConnection;
   messages: string[] = [];
   user: string = '';
