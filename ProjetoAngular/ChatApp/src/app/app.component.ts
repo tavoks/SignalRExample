@@ -1,33 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import * as signalR from '@microsoft/signalr';
+import { SignalRService } from './signal-r.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent implements OnInit {
+  constructor(private signalRService: SignalRService) { }
   title = 'Meu Aplicativo Angular';
-  private hubConnection: signalR.HubConnection;
-  messages: string[] = [];
+  public users: Set<string> = new Set();
+  messages: Array<{ user: string, message: string, connectionId: string }> = [];
   user: string = '';
   message: string = '';
+  userId: string = '';
 
   ngOnInit(): void {
-    this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:7220/chatHub') // Update with your backend URL
-      .build();
+    this.signalRService.startConnection();
 
-    this.hubConnection.start().catch(err => console.error(err));
-
-    this.hubConnection.on('ReceiveMessage', (user: string, message: string) => {
-      this.messages.push(`${user}: ${message}`);
+    this.signalRService.hubConnection.on('ReceiveMessage', (user: string, message: string, connectionId: string) => {
+      this.messages.push({ user, message, connectionId });
     });
   }
 
   sendMessage(): void {
-    this.hubConnection.invoke('SendMessage', this.user, this.message)
+    this.signalRService.hubConnection.invoke('SendMessage', this.user, this.message)
       .catch(err => console.error(err));
     this.message = '';
   }
+
+  isUserOnline(connectionId: string): boolean {
+    return this.signalRService.users.has(connectionId);
+  }
 }
+
