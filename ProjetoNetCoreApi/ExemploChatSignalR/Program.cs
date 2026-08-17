@@ -9,37 +9,27 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseRouting();
 
-app.UseCors("AllowOrigin");
+app.UseCors(policy =>
+{
+    policy.SetIsOriginAllowed(_ => true)
+          .AllowAnyHeader()
+          .AllowAnyMethod()
+          .AllowCredentials();
+});
 
 app.UseAuthorization();
 
-app.UseCors(builder =>
-{
-    builder.WithOrigins("http://localhost:4200") // Update with your Angular app URL
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials();
-});
-
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapHub<ChatHub>("/chatHub");
-    endpoints.MapControllers();
-});
-
+app.MapHub<ChatHub>("/chatHub");
 app.MapControllers();
 
 app.Run();
